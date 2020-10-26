@@ -8,8 +8,9 @@ def get_x_poly(time_period, degree):
 
 class PolynomialRegression:
 
-    def __init__(self, degree):
+    def __init__(self, degree, state_name):
         self.degree = degree
+        self.state_name = state_name
         self.model = None
 
     def train(self, time_period, state):
@@ -18,3 +19,6 @@ class PolynomialRegression:
 
     def get_predictions(self, time_period):
         return np.round(self.model.predict(get_x_poly(time_period, self.degree)), 0).astype(np.int32)
+    
+    def get_state_name(self):
+        return self.state_name
