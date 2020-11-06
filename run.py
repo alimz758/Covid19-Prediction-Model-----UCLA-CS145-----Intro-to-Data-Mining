@@ -1,23 +1,16 @@
+import sys
 import csv
 import pandas as pd
 
+from polynomial_regression import PolynomialRegression
+from neural_network import NeuralNetwork
 
-# from sys import argv
-# import os.path
-
-
-# def file_exists(path):
-#     if(os.path.isfile(path)):
-#         return True
-#     return False
-
-# sort state order, and index from 0 to 49
-# for each state
 US_STATES = []
 NUMBER_OF_DAYS = 26
 STATES_COUNT = 50
-SUBMISSION_FILE_NAME = "submission"
+SUBMISSION_FILE_NAME = "Team14.csv"
 STATE_CSV_FILE_PATH = './data/daily_report_per_states/states/states.csv'
+ACCEPTED_MODEL_TYPES = ["NN", "PR"]
 
 
 def init():
@@ -31,15 +24,15 @@ def init():
 
 
 def get_forecast_id(date_day, state_id):
-    return date_day - 1 + STATES_COUNT * state_id
+    return date_day + STATES_COUNT * state_id
 
 # model_type: either "NN" or "PR"
 
 
 def predict(model_type):
     prediction_model = None
-    predicted_deaths_values = []
-    predicted_confirmed_values = []
+    predicted_deaths_values = [None] * STATES_COUNT
+    predicted_confirmed_values = [None] * STATES_COUNT
     res = []
 
     if model_type == "NN":
@@ -52,27 +45,31 @@ def predict(model_type):
     # get predicted values for each state
     for state_id in range(STATES_COUNT):
         print("Training & predicting for ", US_STATES[state_id])
-        predicted_deaths_values[states_id] = prediction_model(
+        predicted_deaths_values[state_id] = prediction_model(
             state_id, "Deaths")
         predicted_confirmed_values[state_id] = prediction_model(
             state_id, "Confirmed")
 
-    for day in range(NUMBER_OF_DAYS):
-        for state_id in range(STATES_COUNT):
+    for state_id in range(STATES_COUNT):
+        for day in range(NUMBER_OF_DAYS):
             forcast_id = get_forecast_id(day, state_id)
-            # state = US_STATES[state_id]
-            res[forecast_id] = [forcast_id, predicted_confirmed_values[state_id]
-                                [day], predicted_deaths_values[state_id][day]]
+            res.append([forcast_id, predicted_confirmed_values[state_id]
+                        [day], predicted_deaths_values[state_id][day]])
 
     return res
 
 
 def get_PR_prediction(state_id, prediction_type):
-    return
+    pr_model = PolynomialRegression()
+    pr_model.train(US_STATES[state_id], prediction_type)
+    return pr_model.predict()
 
 
-def get_NN_prediction():
-    return
+def get_NN_prediction(state_id, prediction_type):
+    pr_model = NeuralNetwork()
+    pr_model.train(US_STATES[state_id], prediction_type)
+    return pr_model.predict()
+
 
 # prediction_values: 2D array, [<String>forecast_id][<Array>(forecast_id, confirmed_values, death_values)]
 
@@ -82,19 +79,19 @@ def write_file(prediction_values):
     file.truncate()
 
     for row in prediction_values:
-        line = row[0] + "," + row[1][1] + "," + row[1][2] + "\n"
+        line = str(row[0]) + "," + str(row[1]) + \
+            "," + str(row[2]) + "\n"
         file.write(line)
 
 
 def main():
     init()
-    output = predict("NN")
-    write_file(output)
-    # output = predict("PR")
+    model_type = sys.argv[1]
+    if not model_type in ACCEPTED_MODEL_TYPES:
+        raise ValueError("Only " + str(ACCEPTED_MODEL_TYPES) + " accepted")
 
-    # input_file_name = argv[1]
-    # if not file_exists(input_file_name):
-    #     raise ValueError("File with filename not found")
+    output = predict(model_type)
+    write_file(output)
 
 
 if __name__ == "__main__":

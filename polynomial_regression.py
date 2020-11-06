@@ -1,24 +1,77 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+import math
+import importlib
+
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 import numpy as np
 
-def get_x_poly(time_period, degree):
-    polynomial_features = PolynomialFeatures(degree = degree)
-    return polynomial_features.fit_transform(time_period)
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.model_selection import cross_val_score
 
-class PolynomialRegression:
+from prediction_model import PredictionModel
+from create_input_df import CreateDataframe
 
-    def __init__(self, degree, state_name):
-        self.degree = degree
-        self.state_name = state_name
-        self.model = None
+MIN_POLY_DEGREE = 1
+MAX_POLY_DEGREE = 6
 
-    def train(self, time_period, state):
+
+class PolynomialRegression(PredictionModel):
+    def __init__(self):
+        super(PolynomialRegression, self).__init__()
         self.model = LinearRegression()
-        self.model.fit(get_x_poly(time_period, self.degree), state)
+        self.best_degree = None
 
-    def get_predictions(self, time_period):
-        return np.round(self.model.predict(get_x_poly(time_period, self.degree)), 0).astype(np.int32)
-    
-    def get_state_name(self):
-        return self.state_name
+    def train(self, predict_state, predict_field):
+        self.model = LinearRegression()
+
+        train_df = self.assign_train_df(predict_field)
+        y_train = np.array(train_df[predict_state]).reshape(-1,)
+
+        # Perform cross-validation
+        validation_errors = []
+        for i in range(MIN_POLY_DEGREE, MAX_POLY_DEGREE):
+            poly = PolynomialFeatures(degree=i)
+            x_transform = poly.fit_transform(self.x_train)
+
+            validation_scores = cross_val_score(
+                self.model, x_transform, y=y_train, scoring='neg_mean_squared_error', cv=10)
+            validation_errors += [math.sqrt(- np.average(validation_scores))]
+
+        # Find best polynomial degree
+        validation_errors = np.array(validation_errors)
+        self.best_degree = np.where(
+            validation_errors == validation_errors.min())[0][0] + 1
+
+        # Train and predict best model
+        poly = PolynomialFeatures(degree=self.best_degree)
+        x_transform = poly.fit_transform(self.x_train)
+        self.model.fit(x_transform, y_train)
+
+        # y_train_pred = self.model.predict(x_transform)
+        # Draw scatter plot
+        #self.scatter_plot(x_train, y_train, y_train_pred)
+
+    def predict(self):
+        poly = PolynomialFeatures(degree=self.best_degree)
+        x_test_transform = poly.fit_transform(self.x_test)
+        y_pred = self.model.predict(x_test_transform)
+
+        return np.round(y_pred, 0).astype(np.int32)
+
+    # def predict()
+
+
+def main():
+    poly = PolynomialRegression()
+    poly.train("Alabama", "Confirmed")
+    prediction = poly.predict()
+    print(prediction)
+
+
+if __name__ == "__main__":
+    main()

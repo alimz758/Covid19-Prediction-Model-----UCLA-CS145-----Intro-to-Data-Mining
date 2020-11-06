@@ -2,6 +2,16 @@
 
 Course project for UCLA CS145, Introduction to Data Mining
 
+## Running the Model
+
+The main driver script is `run.py`. It takes in a single argument, the ML model type: [NN, PR]
+
+### ex)
+
+> py run.py NN
+
+This will generate a result csv file, matching the Kaggle submission format. To change any configurations, refer to the constant variables declared in run.py, polynomial_regression.py, neural_network.py, or prediction_model.py (superclass of all prediction models).
+
 ## Initializing Input Data
 
 ### Partitioning daily report data by states
