@@ -11,8 +11,8 @@ class NeuralNetwork(PredictionModel):
         super(NeuralNetwork, self).__init__()
         self.model = MLPRegressor()
 
-    def train(self, predict_state, predict_field, solver="adam", activation="relu",  hidden_layer_sizes=[60, 60],
-              learning_rate_init=0.001, max_iter=2000, learning_rate='constant'):
+    def train(self, predict_state, predict_field, solver="adam", activation="relu",  hidden_layer_sizes=(80, 80),
+              learning_rate_init=0.0001, max_iter=500000, learning_rate='adaptive'):
         self.model = MLPRegressor(solver=solver, activation=activation,  hidden_layer_sizes=hidden_layer_sizes,
                                   learning_rate_init=learning_rate_init, max_iter=max_iter, learning_rate=learning_rate)
 

@@ -24,7 +24,7 @@ def init():
 
 
 def get_forecast_id(date_day, state_id):
-    return date_day + STATES_COUNT * state_id
+    return state_id + STATES_COUNT * date_day
 
 # model_type: either "NN" or "PR"
 
@@ -50,8 +50,8 @@ def predict(model_type):
         predicted_confirmed_values[state_id] = prediction_model(
             state_id, "Confirmed")
 
-    for state_id in range(STATES_COUNT):
-        for day in range(NUMBER_OF_DAYS):
+    for day in range(NUMBER_OF_DAYS):
+        for state_id in range(STATES_COUNT):
             forcast_id = get_forecast_id(day, state_id)
             res.append([forcast_id, predicted_confirmed_values[state_id]
                         [day], predicted_deaths_values[state_id][day]])
