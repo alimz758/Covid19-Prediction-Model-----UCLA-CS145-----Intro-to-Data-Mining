@@ -3,7 +3,7 @@ import numpy as np
 import math
 import os.path
 
-DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31}
+DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 26}
 PER_STATE_DATA_PATH = './data/daily_report_per_states/'
 KEPT_FIELDS = ["Confirmed", "Deaths", "Recovered", "Active", "FIPS", "Incident_Rate", "People_Tested",
                "People_Hospitalized", "Mortality_Rate", "UID", "ISO3", "Testing_Rate", "Hospitalization_Rate"]
