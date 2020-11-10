@@ -54,3 +54,22 @@ MM-DD-YYYY.csv in UTC.
 - <b>ISO3</b> - Officialy assigned country code identifiers.
 - <b>Testing_Rate</b> - Total test results per 100,000 persons. The "total test results" are equal to "Total test results (Positive + Negative)" from [COVID Tracking Project](https://covidtracking.com/).
 - <b>Hospitalization_Rate</b> - US Hospitalization Rate (%): = Total number hospitalized / Number cases. The "Total number hospitalized" is the "Hospitalized – Cumulative" count from [COVID Tracking Project](https://covidtracking.com/). The "hospitalization rate" and "Total number hospitalized" is only presented for those states which provide cumulative hospital data. (Nullified on Aug 31, see [Issue #3083](https://github.com/CSSEGISandData/COVID-19/issues/3083))
+
+
+## Neural Network Model
+
+For more details of Neural Network Model please refer to `neural_network.py`.
+
+In this class we train based on Neural Network and we use GridSearch to find the best [parameters](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier)
+
+You can add/remove parameters and their values to see how to find the optimal NN settings. Please only modify the following in  `neural_network.py`
+
+```
+self.parameters = {
+    'hidden_layer_sizes': [(80, 80), (70, 70), (60, 60)],
+    'activation': ['relu'],
+    'solver': ['adam'],
+    'learning_rate': ['adaptive'],
+    'learning_rate_init': [0.0001, 0.001, 0.005, 0.0005]
+} 
+```
