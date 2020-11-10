@@ -60,11 +60,12 @@ class PolynomialRegression(PredictionModel):
         poly = PolynomialFeatures(degree=self.best_degree)
         x_test_transform = poly.fit_transform(self.x_test)
         y_pred = self.model.predict(x_test_transform)
+        self.y_pred = y_pred
 
         return np.round(y_pred, 0).astype(np.int32)
-
-    # def predict()
-
+    
+    def mape(self):
+        return np.mean(np.abs((self.y_test - self.y_pred) / self.y_test)) * 100
 
 def main():
     poly = PolynomialRegression()
