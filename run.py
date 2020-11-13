@@ -4,13 +4,14 @@ import pandas as pd
 
 from polynomial_regression import PolynomialRegression
 from neural_network import NeuralNetwork
+from arima import ARIMA
 
 US_STATES = []
 NUMBER_OF_DAYS = 26
 STATES_COUNT = 50
 SUBMISSION_FILE_NAME = "Team14.csv"
 STATE_CSV_FILE_PATH = './data/daily_report_per_states/states/states.csv'
-ACCEPTED_MODEL_TYPES = ["NN", "PR"]
+ACCEPTED_MODEL_TYPES = ["NN", "PR", "AR"]
 
 
 def init():
@@ -39,6 +40,8 @@ def predict(model_type):
         prediction_model = get_NN_prediction
     elif model_type == "PR":
         prediction_model = get_PR_prediction
+    elif model_type == "AR":
+        prediction_model = get_AR_prediction
     else:
         raise ValueError("Model not recognized")
 
@@ -69,6 +72,12 @@ def get_NN_prediction(state_id, prediction_type):
     pr_model = NeuralNetwork()
     pr_model.train(US_STATES[state_id], prediction_type)
     return pr_model.predict()
+
+def get_AR_prediction(state_id, prediction_type):
+    arima_model = ARIMA()
+    arima_model.train(US_STATES[state_id], prediction_type)
+    return arima_model.predict()
+
 
 
 # prediction_values: 2D array, [<String>forecast_id][<Array>(forecast_id, confirmed_values, death_values)]
