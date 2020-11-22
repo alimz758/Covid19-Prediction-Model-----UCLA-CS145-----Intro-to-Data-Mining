@@ -1,4 +1,4 @@
-from create_input_df import CreateDataframe
+from .create_input_df import CreateDataframe
 import numpy as np
 
 PREDICTION_DAYS_COUNT = 26

@@ -2,16 +2,16 @@ import sys
 import csv
 import pandas as pd
 
-from polynomial_regression import PolynomialRegression
-from neural_network import NeuralNetwork
-from arima import ARIMA
-from auto_regression import AutoRegression
+from project.models.polynomial_regression import PolynomialRegression
+from project.models.neural_network import NeuralNetwork
+from project.models.arima import ARIMA
+from project.models.auto_regression import AutoRegression
 
 US_STATES = []
 NUMBER_OF_DAYS = 26
 STATES_COUNT = 50
 SUBMISSION_FILE_NAME = "Team14.csv"
-STATE_CSV_FILE_PATH = './data/daily_report_per_states/states/states.csv'
+STATE_CSV_FILE_PATH = './project/data/daily_report_per_states/states/states.csv'
 ACCEPTED_MODEL_TYPES = ["NN", "PR", "ARIMA", "AR"]
 
 

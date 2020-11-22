@@ -6,8 +6,8 @@ import statsmodels.api as sm
 import warnings
 warnings.filterwarnings("ignore")
 
-from prediction_model import PredictionModel
-from create_input_df import CreateDataframe
+from ..utils.prediction_model import PredictionModel
+from ..utils.create_input_df import CreateDataframe
 
 
 FUTURE_DAYS = 26

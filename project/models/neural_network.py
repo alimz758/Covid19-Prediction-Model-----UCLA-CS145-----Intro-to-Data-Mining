@@ -3,8 +3,8 @@ from sklearn.model_selection import GridSearchCV
 import numpy as np
 
 
-from prediction_model import PredictionModel
-from create_input_df import CreateDataframe
+from ..utils.prediction_model import PredictionModel
+from ..utils.create_input_df import CreateDataframe
 
 
 class NeuralNetwork(PredictionModel):

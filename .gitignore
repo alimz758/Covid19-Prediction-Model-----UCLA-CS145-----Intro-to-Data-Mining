@@ -1,2 +1,4 @@
 __pycache__/
 /*.csv
+project/models/__pycache__/
+project/utils/__pycache__/

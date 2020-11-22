@@ -3,7 +3,7 @@ import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 
-READING_PATH = './data/daily_report_per_states/'
+READING_PATH = './project/data/daily_report_per_states/'
 
 
 def get_date_column_as_df():

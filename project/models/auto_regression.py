@@ -1,10 +1,10 @@
 
 import numpy as np
 import pandas as pd
-from statsmodels.tsa.ar_model import ar_select_order
+from statsmodels.tsa.ar_model import AR
 
-from prediction_model import PredictionModel
-from create_input_df import CreateDataframe
+from ..utils.prediction_model import PredictionModel
+from ..utils.create_input_df import CreateDataframe
 
 
 FUTURE_DAYS = 26
@@ -19,7 +19,7 @@ class AutoRegression(PredictionModel):
     def train(self, predict_state, predict_field):
         self.train_df = self.assign_train_df(predict_field)
         self.state = predict_state
-        self.model = ar_select_order(self.train_df[predict_state], maxlag=15).model
+        self.model = AR(self.train_df[predict_state])
         self.model_fitted = self.model.fit()
 
     def predict(self):

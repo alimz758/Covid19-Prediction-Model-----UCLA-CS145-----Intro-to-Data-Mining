@@ -13,8 +13,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.model_selection import cross_val_score
 
-from prediction_model import PredictionModel
-from create_input_df import CreateDataframe
+from ..utils.prediction_model import PredictionModel
+from ..utils.create_input_df import CreateDataframe
 
 MIN_POLY_DEGREE = 1
 MAX_POLY_DEGREE = 6
