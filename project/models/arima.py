@@ -2,7 +2,11 @@
 import numpy as np
 import itertools
 import pandas as pd
+<<<<<<< HEAD
 from statsmodels.tsa.arima_model import ARIMA
+=======
+from statsmodels.tsa.arima.model import ARIMA
+>>>>>>> new models trial- ARIMA doesn't converge
 from sklearn.metrics import mean_squared_error
 import warnings
 warnings.filterwarnings("ignore")
@@ -18,16 +22,16 @@ def evaluate_arima_model(X, arima_order):
     # prepare training dataset
     train_size = int(len(X.values) * 0.66)
     train, test = X.values[0:train_size], X.values[train_size:]
-    history = [x for x in train]    
-    # make predictions
+    history = [x for x in train]  
     predictions = list()
     try:
         for t in range(len(test)):
             model = ARIMA(history, order=arima_order)
-            model_fit = model.fit(disp=0)
+            model_fit = model.fit()
             yhat = model_fit.forecast()[0]
-            predictions.append(yhat)
+            predictions.append(yhat) 
             history.append(test[t])
+            
     except:
         pass
     if len(test)>len(predictions):
@@ -61,7 +65,7 @@ class ARIMA_MODEL(PredictionModel):
         self.model = ARIMA(self.train_df[predict_state],
                             order=self.best_param)
 
-        self.results = self.model.fit(disp=False)
+        self.results = self.model.fit()
 
     def predict(self):
         pred = self.results.predict(

@@ -7,7 +7,11 @@ from project.models.neural_network import NeuralNetwork
 from project.models.sarima import SARIMA_MODEL
 from project.models.auto_regression import AutoRegression
 from project.models.arma import  ARMA_MODEL
+<<<<<<< HEAD
 from project.models.mean_average import MeanAverage
+=======
+from project.models.moving_average import MovingAverage
+>>>>>>> new models trial- ARIMA doesn't converge
 from project.models.arima import ARIMA_MODEL
 
 US_STATES = []
@@ -101,7 +105,11 @@ def get_ARMA_prediction(state_id, prediction_type):
     return arma_model.predict()
 
 def get_MA_prediction(state_id, prediction_type):
+<<<<<<< HEAD
     ma_model = MeanAverage()
+=======
+    ma_model = MovingAverage()
+>>>>>>> new models trial- ARIMA doesn't converge
     ma_model.train(US_STATES[state_id], prediction_type)
     return ma_model.predict()
 

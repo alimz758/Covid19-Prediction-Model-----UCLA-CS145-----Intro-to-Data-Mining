@@ -1,7 +1,7 @@
 
 import numpy as np
 import pandas as pd
-from statsmodels.tsa.ar_model import AR
+from statsmodels.tsa.arima_model import ARMA
 
 from ..utils.prediction_model import PredictionModel
 from ..utils.create_input_df import CreateDataframe
@@ -9,9 +9,9 @@ from ..utils.create_input_df import CreateDataframe
 
 FUTURE_DAYS = 26
 
-class AutoRegression(PredictionModel):
+class MovingAverage(PredictionModel):
     def __init__(self):
-        super(AutoRegression, self).__init__()
+        super(MovingAverage, self).__init__()
         self.model = None
         self.model_fitted = None
         self.train_df = None
@@ -19,8 +19,8 @@ class AutoRegression(PredictionModel):
     def train(self, predict_state, predict_field):
         self.train_df = self.assign_train_df(predict_field)
         self.state = predict_state
-        self.model = AR(self.train_df[predict_state])
-        self.model_fitted = self.model.fit(maxlag=8)
+        self.model = ARMA(self.train_df[predict_state],  order=(0,1, 10))
+        self.model_fitted = self.model.fit(disp=False, transparams=False)
 
     def predict(self):
         pred = self.model_fitted.predict(
@@ -32,9 +32,9 @@ class AutoRegression(PredictionModel):
 
 
 def main():
-    ar = AutoRegression()
-    ar.train("Wyoming", "Confirmed")
-    prediction = ar.predict()
+    ma = MovingAverage()
+    ma.train("Wyoming", "Confirmed")
+    prediction = ma.predict()
     print(prediction)
 
 
