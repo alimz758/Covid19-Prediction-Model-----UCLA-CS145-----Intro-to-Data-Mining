@@ -2,11 +2,8 @@
 import numpy as np
 import itertools
 import pandas as pd
-<<<<<<< HEAD
-from statsmodels.tsa.arima_model import ARIMA
-=======
+
 from statsmodels.tsa.arima.model import ARIMA
->>>>>>> new models trial- ARIMA doesn't converge
 from sklearn.metrics import mean_squared_error
 import warnings
 warnings.filterwarnings("ignore")

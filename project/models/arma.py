@@ -1,13 +1,10 @@
 
 import numpy as np
 import pandas as pd
-<<<<<<< HEAD
 from statsmodels.tsa.arima_model import ARMA
-=======
 import itertools
-from statsmodels.tsa.arima_model import ARMA
 from sklearn.metrics import mean_squared_error
->>>>>>> new models trial- ARIMA doesn't converge
+
 
 from ..utils.prediction_model import PredictionModel
 from ..utils.create_input_df import CreateDataframe
@@ -15,11 +12,9 @@ from ..utils.create_input_df import CreateDataframe
 
 FUTURE_DAYS = 26
 
-<<<<<<< HEAD
 class ARMA_MODEL(PredictionModel):
     def __init__(self):
         super(ARMA_MODEL, self).__init__()
-=======
 def evaluate_arima_model(X, arima_order):
     # prepare training dataset
     train_size = int(len(X.values) * 0.66)
@@ -51,7 +46,6 @@ class ARMA_MODEL(PredictionModel):
         self.pq = list(itertools.product(self.p, self.q))
         self.best_param = None
         self.best_mse = float('inf')
->>>>>>> new models trial- ARIMA doesn't converge
         self.model = None
         self.model_fitted = None
         self.train_df = None
@@ -59,13 +53,7 @@ class ARMA_MODEL(PredictionModel):
     def train(self, predict_state, predict_field):
         self.train_df = self.assign_train_df(predict_field)
         self.state = predict_state
-<<<<<<< HEAD
-        self.model = ARMA(self.train_df[predict_state], order=(2, 1))
-        self.model_fitted = self.model.fit(disp=False)
 
-    def predict(self):
-        pred = self.model_fitted.predict(
-=======
         for param in self.pq:
             try:
                 mse = evaluate_arima_model(self.train_df[predict_state], param)
@@ -78,9 +66,9 @@ class ARMA_MODEL(PredictionModel):
 
         self.results = self.model.fit(disp=False, transparams=False)
 
+
     def predict(self):
         pred = self.results.predict(
->>>>>>> new models trial- ARIMA doesn't converge
                 start=len(self.train_df[self.state]), 
                 end=len(self.train_df[self.state]) + FUTURE_DAYS - 1, 
                 dynamic=False)
