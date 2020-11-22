@@ -5,13 +5,14 @@ import pandas as pd
 from polynomial_regression import PolynomialRegression
 from neural_network import NeuralNetwork
 from arima import ARIMA
+from auto_regression import AutoRegression
 
 US_STATES = []
 NUMBER_OF_DAYS = 26
 STATES_COUNT = 50
 SUBMISSION_FILE_NAME = "Team14.csv"
 STATE_CSV_FILE_PATH = './data/daily_report_per_states/states/states.csv'
-ACCEPTED_MODEL_TYPES = ["NN", "PR", "AR"]
+ACCEPTED_MODEL_TYPES = ["NN", "PR", "ARIMA", "AR"]
 
 
 def init():
@@ -40,6 +41,8 @@ def predict(model_type):
         prediction_model = get_NN_prediction
     elif model_type == "PR":
         prediction_model = get_PR_prediction
+    elif model_type == "ARIMA":
+        prediction_model = get_ARIMA_prediction
     elif model_type == "AR":
         prediction_model = get_AR_prediction
     else:
@@ -73,10 +76,15 @@ def get_NN_prediction(state_id, prediction_type):
     pr_model.train(US_STATES[state_id], prediction_type)
     return pr_model.predict()
 
-def get_AR_prediction(state_id, prediction_type):
+def get_ARIMA_prediction(state_id, prediction_type):
     arima_model = ARIMA()
     arima_model.train(US_STATES[state_id], prediction_type)
     return arima_model.predict()
+
+def get_AR_prediction(state_id, prediction_type):
+    ar_model = AutoRegression()
+    ar_model.train(US_STATES[state_id], prediction_type)
+    return ar_model.predict()
 
 
 

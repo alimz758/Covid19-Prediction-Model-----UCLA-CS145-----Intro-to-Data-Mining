@@ -3,6 +3,8 @@ import numpy as np
 import itertools
 import pandas as pd
 import statsmodels.api as sm
+import warnings
+warnings.filterwarnings("ignore")
 
 from prediction_model import PredictionModel
 from create_input_df import CreateDataframe
@@ -36,7 +38,7 @@ class ARIMA(PredictionModel):
                                             enforce_stationarity=False,
                                             enforce_invertibility=False)
 
-                    results = mod.fit()
+                    results = mod.fit(disp=False)
                     if results.aic < self.best_aic:
                         self.best_aic = results.aic
                         self.best_param = param
@@ -49,7 +51,7 @@ class ARIMA(PredictionModel):
                                 enforce_stationarity=False,
                                 enforce_invertibility=False)
 
-        self.results = self.model.fit()
+        self.results = self.model.fit(disp=False)
 
     def predict(self):
         pred = self.results.get_forecast(steps=FUTURE_DAYS)
