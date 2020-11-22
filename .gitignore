@@ -2,3 +2,4 @@ __pycache__/
 /*.csv
 project/models/__pycache__/
 project/utils/__pycache__/
+.DS_Store
