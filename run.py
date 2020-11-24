@@ -116,7 +116,7 @@ def get_ARIMA_prediction(state_id, prediction_type):
 def write_file(prediction_values):
     file = open(SUBMISSION_FILE_NAME, "w")
     file.truncate()
-
+    file.write("ForecastID,Confirmed,Deaths\n")
     for row in prediction_values:
         line = str(row[0]) + "," + str(row[1]) + \
             "," + str(row[2]) + "\n"
