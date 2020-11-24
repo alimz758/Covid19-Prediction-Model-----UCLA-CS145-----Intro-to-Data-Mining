@@ -4,7 +4,17 @@ Course project for UCLA CS145, Introduction to Data Mining
 
 ## Running the Model
 
-The main driver script is `run.py`. It takes in a single argument, the ML model type: [NN, PR, AR, ARIMA]
+The main driver script is `run.py`. It takes in a single argument, the ML model type: [NN, PR, AR, ARIMA, ARMA, MA, SARIMA]
+
+## Models used for prediction:
+
+> PR: Polynomial Regression
+> NN: Neural Network
+> AR: Auto Regression
+> MA: Mean Average
+> ARIMA
+> ARMA
+> SARIMA
 
 ### ex)
 

@@ -4,15 +4,18 @@ import pandas as pd
 
 from project.models.polynomial_regression import PolynomialRegression
 from project.models.neural_network import NeuralNetwork
-from project.models.arima import ARIMA
+from project.models.sarima import SARIMA_MODEL
 from project.models.auto_regression import AutoRegression
+from project.models.moving_average import MovingAverage
+from project.models.arima import ARIMA_MODEL
+
 
 US_STATES = []
 NUMBER_OF_DAYS = 26
 STATES_COUNT = 50
 SUBMISSION_FILE_NAME = "Team14.csv"
 STATE_CSV_FILE_PATH = './project/data/daily_report_per_states/states/states.csv'
-ACCEPTED_MODEL_TYPES = ["NN", "PR", "ARIMA", "AR"]
+ACCEPTED_MODEL_TYPES = ["NN", "PR", "SARIMA", "AR", "MA", "ARIMA"]
 
 
 def init():
@@ -41,10 +44,14 @@ def predict(model_type):
         prediction_model = get_NN_prediction
     elif model_type == "PR":
         prediction_model = get_PR_prediction
-    elif model_type == "ARIMA":
-        prediction_model = get_ARIMA_prediction
+    elif model_type == "SARIMA":
+        prediction_model = get_SARIMA_prediction
     elif model_type == "AR":
         prediction_model = get_AR_prediction
+    elif model_type == "MA":
+        prediction_model = get_MA_prediction
+    elif model_type == "ARIMA":
+        prediction_model = get_ARIMA_prediction
     else:
         raise ValueError("Model not recognized")
 
@@ -70,22 +77,30 @@ def get_PR_prediction(state_id, prediction_type):
     pr_model.train(US_STATES[state_id], prediction_type)
     return pr_model.predict()
 
-
 def get_NN_prediction(state_id, prediction_type):
     pr_model = NeuralNetwork()
     pr_model.train(US_STATES[state_id], prediction_type)
     return pr_model.predict()
 
-def get_ARIMA_prediction(state_id, prediction_type):
-    arima_model = ARIMA()
-    arima_model.train(US_STATES[state_id], prediction_type)
-    return arima_model.predict()
+def get_SARIMA_prediction(state_id, prediction_type):
+    sarima_model = SARIMA_MODEL()
+    sarima_model.train(US_STATES[state_id], prediction_type)
+    return sarima_model.predict()
 
 def get_AR_prediction(state_id, prediction_type):
     ar_model = AutoRegression()
     ar_model.train(US_STATES[state_id], prediction_type)
     return ar_model.predict()
 
+def get_MA_prediction(state_id, prediction_type):
+    ma_model = MovingAverage()
+    ma_model.train(US_STATES[state_id], prediction_type)
+    return ma_model.predict()
+
+def get_ARIMA_prediction(state_id, prediction_type):
+    arima_model = ARIMA_MODEL()
+    arima_model.train(US_STATES[state_id], prediction_type)
+    return arima_model.predict()
 
 
 # prediction_values: 2D array, [<String>forecast_id][<Array>(forecast_id, confirmed_values, death_values)]
@@ -94,7 +109,7 @@ def get_AR_prediction(state_id, prediction_type):
 def write_file(prediction_values):
     file = open(SUBMISSION_FILE_NAME, "w")
     file.truncate()
-
+    file.write("ForecastID,Confirmed,Deaths\n")
     for row in prediction_values:
         line = str(row[0]) + "," + str(row[1]) + \
             "," + str(row[2]) + "\n"
