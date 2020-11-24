@@ -12,11 +12,10 @@ The main driver script is `run.py`. It takes in a single argument, the ML model 
 PR: Polynomial Regression
 NN: Neural Network
 AR: Auto Regression
-MA: Mean Average
+MA: Moving Average
 ARIMA
 ARMA
 SARIMA
-
 ```
 
 ### ex)
