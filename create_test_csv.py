@@ -1,11 +1,11 @@
 import numpy as np
-from create_input_df import CreateDataframe
+from project.utils.create_input_df import CreateDataframe
 import pandas as pd
 
 PREDICTION_DAYS_COUNT = 26
 FILE_NAME = "Test.csv"
 STATES_COUNT = 50
-STATE_CSV_FILE_PATH = "./data/daily_report_per_states/states/states.csv"
+STATE_CSV_FILE_PATH = "./project/data/daily_report_per_states/states/states.csv"
 
 def get_forecast_id(date_day, state_id):
     return state_id + STATES_COUNT * date_day
