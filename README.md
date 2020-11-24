@@ -40,6 +40,19 @@ It will then create a csv file for each states, each containing its state's dail
 
 This table contains an aggregation of each USA State level data.
 
+
+### Create the Test.csv
+
+To create the test.csv file, run: 
+
+> python create_test_csv.py
+
+### Get MAPE
+
+To get MAPE of the prediction vs truth data, run:
+
+> python mape.py
+
 ### File naming convention
 
 MM-DD-YYYY.csv in UTC.
