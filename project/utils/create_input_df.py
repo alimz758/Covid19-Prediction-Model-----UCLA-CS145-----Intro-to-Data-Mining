@@ -24,6 +24,7 @@ class CreateDataframe(object):
                     df = pd.concat([df, state_df[state_name]], axis=1)
         df = df.assign(Days=[1 + i for i in range(len(df))]
                        )[['Days'] + df.columns.tolist()]
+    
         return df
 
     def get_per_state_df(self):

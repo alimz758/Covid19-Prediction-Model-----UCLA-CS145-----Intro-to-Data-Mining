@@ -20,7 +20,7 @@ class AutoRegression(PredictionModel):
         self.train_df = self.assign_train_df(predict_field)
         self.state = predict_state
         self.model = AR(self.train_df[predict_state])
-        self.model_fitted = self.model.fit(maxlag=6)
+        self.model_fitted = self.model.fit(maxlag=1)
 
     def predict(self):
         pred = self.model_fitted.predict(

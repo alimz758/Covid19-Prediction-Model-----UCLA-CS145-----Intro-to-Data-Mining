@@ -11,7 +11,6 @@ class PredictionModel:
             "Confirmed")[:142]
         self.test_data_confirmed = self.dataFrameFactory.get_final_df(
             "Confirmed")[142:]
-        
         self.train_data_death = self.dataFrameFactory.get_final_df("Deaths")[:142]
         self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[142:]
         
@@ -23,7 +22,8 @@ class PredictionModel:
             self.train_data_confirmed["Days"]).reshape(-1, 1)[:142]
         # testing input: array of date index, following the training input (i.e 142,143,...167)
         self.x_test = np.array(
-            self.train_data_confirmed["Days"]).reshape(-1, 1)[142:]
+            self.test_data_confirmed["Days"]).reshape(-1, 1)
+        
 
     def assign_train_df(self, predict_field):
         if predict_field == "Confirmed":

@@ -27,10 +27,10 @@ def evaluate_arima_model(X, arima_order):
             model_fit = model.fit()
             yhat = model_fit.forecast()[0]
             predictions.append(yhat) 
-            history.append(test[t])
-            
+            history.append(test[t])        
     except:
         pass
+    
     if len(test)>len(predictions):
         error = mean_squared_error(test[:len(predictions)], predictions)
     else:

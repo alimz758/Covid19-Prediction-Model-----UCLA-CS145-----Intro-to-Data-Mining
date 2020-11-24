@@ -14,8 +14,8 @@ def main():
     train_df = pd.read_csv(TRAIN_PATH)
     mape_confirmed = get_mape(test_df['Confirmed'], train_df['Confirmed'])
     mape_deaths = get_mape(test_df['Deaths'], train_df['Deaths'])
-    print("MAPE of Confirmed {}".format(mape_confirmed))
-    print("MAPE of Deaths {}".format(mape_deaths))
+    print("MAPE of Confirmed is: {}".format(mape_confirmed))
+    print("MAPE of Deaths is: {}".format(mape_deaths))
     print('Score is: {}'.format((mape_confirmed+mape_deaths)/2))
 
 
