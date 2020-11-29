@@ -11,8 +11,15 @@ warnings.filterwarnings("ignore")
 from ..utils.prediction_model import PredictionModel
 from ..utils.create_input_df import CreateDataframe
 
+#first round
+# FUTURE_DAYS = 26
 
-FUTURE_DAYS = 26
+#second round
+# 12-07-2020 to 12-13-2020 is 7 days. 
+# 11-22-2020 to 12-07-2020 is 16 days so ignore the first 15 days in prediction below.
+# FUTURE_DAYS = 22
+
+FUTURE_DAYS = 7
 
 # evaluate an ARIMA model for a given order (p,d,q)
 def evaluate_arima_model(X, arima_order):

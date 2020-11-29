@@ -11,7 +11,11 @@ from project.models.arima import ARIMA_MODEL
 
 
 US_STATES = []
-NUMBER_OF_DAYS = 26
+# round 1
+# NUMBER_OF_DAYS = 26
+# round 2
+# NUMBER_OF_DAYS = 22
+NUMBER_OF_DAYS = 7
 STATES_COUNT = 50
 SUBMISSION_FILE_NAME = "Team14.csv"
 STATE_CSV_FILE_PATH = './project/data/daily_report_per_states/states/states.csv'

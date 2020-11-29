@@ -3,8 +3,14 @@ import numpy as np
 import math
 import os.path
 
-DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 26}
-PER_STATE_DATA_PATH = './data/daily_report_per_states/'
+
+# round 1
+# DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 26}
+
+#round 2
+# set november to 22 because we only have data up to the 22nd, hypothetically at the time
+DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 22}
+PER_STATE_DATA_PATH = '../data/daily_report_per_states/'
 KEPT_FIELDS = ["Confirmed", "Deaths", "Recovered", "Active", "FIPS", "Incident_Rate", "People_Tested",
                "People_Hospitalized", "Mortality_Rate", "UID", "ISO3", "Testing_Rate", "Hospitalization_Rate"]
 
@@ -62,15 +68,24 @@ def partition_state(data, date):
 
 def main():
     reset_all_state_files()
-
+    # daily_report_data = pd.read_csv('../data/daily_report/11-22-2020.csv', engine="python")
+    # print(daily_report_data)
     for month in DAYS_COUNT:
+        # print('month', month)
         for day in range(1, DAYS_COUNT[month]+1):
-            date = "0" + str(month) + "-" + day_str(day)
+            # print('month day', month, day)
+            date = ""
+            if month >= 10:
+              date = str(month) + "-" + day_str(day)
+            else:
+              date = "0" + str(month) + "-" + day_str(day)
             filename = date + "-2020.csv"
-            file_path = './data/daily_report/' + filename
+            file_path = '../data/daily_report/' + filename
             if(not file_exists(file_path)):
+                print('skipped', file_path)
                 continue
             daily_report_data = pd.read_csv(file_path, engine="python")
+            # print(daily_report_data)
             partition_state(daily_report_data, date)
             # add methods here
 
