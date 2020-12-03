@@ -7,23 +7,30 @@ import numpy as np
 # round 2
 # predict 22 days but trim off first 15 days because we're predicting some time with a gap ahead of last trained date
 # PREDICTION_DAYS_COUNT = 22
-PREDICTION_DAYS_COUNT = 7
+# PREDICTION_DAYS_COUNT = 7
+
+SUBMISSION_1_ROW_COUNT = 142
+SUBMISSION_2_ROW_COUNT = 225
+
+PREDICTION_1_DAYS_COUNT_ = 26
+PREDICTION_2_DAYS_COUNT = 22
 
 # ls | wc -l to count number of files: 225 which are number of days of data
 # we are trainign up to 
 
 class PredictionModel:
-    def __init__(self):
+    def __init__(self, whichRound):
         self.dataFrameFactory = CreateDataframe()
+        self.whichRound = whichRound
         # round 1 prediction
-        # self.train_data_confirmed = self.dataFrameFactory.get_final_df(
-        #     "Confirmed")[:142]
-        # self.test_data_confirmed = self.dataFrameFactory.get_final_df(
-        #     "Confirmed")[142:]
-        # self.train_data_death = self.dataFrameFactory.get_final_df("Deaths")[:142]
-        # self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[142:]
+        self.train_data_confirmed = self.dataFrameFactory.get_final_df(
+            "Confirmed")[:whichRound]
+        self.test_data_confirmed = self.dataFrameFactory.get_final_df(
+            "Confirmed")[whichRound:]
+        self.train_data_death = self.dataFrameFactory.get_final_df("Deaths")[:whichRound]
+        self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[whichRound:]
 
-        #round 2 prediction
+        # #round 2 prediction
         # self.train_data_confirmed = self.dataFrameFactory.get_final_df(
         #     "Confirmed")[:225]
         # self.test_data_confirmed = self.dataFrameFactory.get_final_df(
@@ -31,13 +38,16 @@ class PredictionModel:
         # self.train_data_death = self.dataFrameFactory.get_final_df("Deaths")[:225]
         # self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[204:]
 
-        self.train_data_confirmed = self.dataFrameFactory.get_final_df(
-            "Confirmed")[:218]
-        self.test_data_confirmed = self.dataFrameFactory.get_final_df(
-            "Confirmed")[218:]
-        self.train_data_death = self.dataFrameFactory.get_final_df("Deaths")[:218]
-        self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[218:]
-        
+
+# verified model 
+        # self.train_data_confirmed = self.dataFrameFactory.get_final_df(
+        #     "Confirmed")[:218]
+        # self.test_data_confirmed = self.dataFrameFactory.get_final_df(
+        #     "Confirmed")[218:]
+        # self.train_data_death = self.dataFrameFactory.get_final_df("Deaths")[:218]
+        # self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[218:]
+###        
+
         assert(len(np.array(self.train_data_confirmed["Days"])) == len(
             np.array(self.train_data_death["Days"])))
 
@@ -48,7 +58,7 @@ class PredictionModel:
 
         # round 2
         self.x_train = np.array(
-            self.train_data_confirmed["Days"]).reshape(-1, 1)[:218]
+            self.train_data_confirmed["Days"]).reshape(-1, 1)[:whichRound]
         # testing input: array of date index, following the training input (i.e 142,143,...167)
         self.x_test = np.array(
             self.test_data_confirmed["Days"]).reshape(-1, 1)

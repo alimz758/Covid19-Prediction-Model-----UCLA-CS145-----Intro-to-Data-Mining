@@ -9,7 +9,7 @@ import os.path
 
 #round 2
 # set november to 22 because we only have data up to the 22nd, hypothetically at the time
-DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 22}
+DAYS_COUNT = {4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12:2}
 PER_STATE_DATA_PATH = '../data/daily_report_per_states/'
 KEPT_FIELDS = ["Confirmed", "Deaths", "Recovered", "Active", "FIPS", "Incident_Rate", "People_Tested",
                "People_Hospitalized", "Mortality_Rate", "UID", "ISO3", "Testing_Rate", "Hospitalization_Rate"]
