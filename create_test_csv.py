@@ -4,7 +4,8 @@ from project.utils.create_input_df import CreateDataframe
 import pandas as pd
 
 # round 1
-PREDICTION_DAYS_COUNT = 26
+# PREDICTION_DAYS_COUNT = 26
+PREDICTION_DAYS_COUNT = 10
 # round 2
 # PREDICTION_DAYS_COUNT = 22
 # PREDICTION_DAYS_COUNT = 7
@@ -27,8 +28,8 @@ class CreateTestCSV(object):
     def __init__(self):
         self.dataFrameFactory = CreateDataframe()
         # round 1
-        self.test_data_confirmed = self.dataFrameFactory.get_final_df("Confirmed")[142:]
-        self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[142:]
+        # self.test_data_confirmed = self.dataFrameFactory.get_final_df("Confirmed")[142:]
+        # self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[142:]
         # testing input: array of date index, following the training input (i.e 142,143,...167)
 
         #testing input: array of date index, following the training input (i.e 204,204,...225)
@@ -37,8 +38,10 @@ class CreateTestCSV(object):
         #     self.test_data_confirmed["Days"]).reshape(-1, 1)[142:]
 
         #round 2
-        # self.days = np.array(
-        #     self.test_data_confirmed["Days"]).reshape(-1, 1)[204:]
+        self.test_data_confirmed = self.dataFrameFactory.get_final_df("Confirmed")[224:]
+        self.test_data_death = self.dataFrameFactory.get_final_df("Deaths")[224:]
+        self.days = np.array(
+            self.test_data_confirmed["Days"]).reshape(-1, 1)[224:]
 
         states_file = STATE_CSV_FILE_PATH
         states = pd.read_csv(states_file, engine="python")
@@ -64,10 +67,10 @@ class CreateTestCSV(object):
         #         res.append([forcast_id, confirmed[state_id]
         #                     [day], deaths[state_id][day]])
 # round 2
-        print('deaths shape', deaths)
-        for day in range(142, 142 + PREDICTION_DAYS_COUNT):
+        # print('deaths shape', deaths)
+        for day in range(224, 224+ PREDICTION_DAYS_COUNT):
             for state_id in range(STATES_COUNT):
-                forcast_id = get_forecast_id(day-142, state_id)
+                forcast_id = get_forecast_id(day-224, state_id)
                 # print('forecast id', forcast_id)
                 # print('day', day)
                 res.append([forcast_id, confirmed[state_id]

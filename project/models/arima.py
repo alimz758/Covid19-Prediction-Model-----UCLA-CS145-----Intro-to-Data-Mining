@@ -48,7 +48,9 @@ class ARIMA_MODEL(PredictionModel):
     def __init__(self, whichRound):
         super(ARIMA_MODEL, self).__init__(whichRound)
         # Define the p, d and q parameters to take any value between 0 and 2
-        self.p = self.d = self.q = range(0, 2)
+        # self.p = self.d = self.q = range(0, 2)
+        self.p = range(0,2)
+        self.d = self.q = range(0, 5)
         # Generate all different combinations of p, q and q triplets
         self.pdq = list(itertools.product(self.p, self.d, self.q))
         self.best_param = None
@@ -73,6 +75,7 @@ class ARIMA_MODEL(PredictionModel):
 
 # future_days, pass in either round 1 or round 2 prediction range
     def predict(self, future_days):
+        # print(future_days)
         pred = self.results.predict(
                 start=len(self.train_df[self.state]), 
                 end=len(self.train_df[self.state]) + future_days - 1, 
