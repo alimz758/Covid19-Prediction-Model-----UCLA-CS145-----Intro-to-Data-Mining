@@ -50,7 +50,7 @@ class ARIMA_MODEL(PredictionModel):
         # Define the p, d and q parameters to take any value between 0 and 2
         # self.p = self.d = self.q = range(0, 2)
         self.p = range(0,2)
-        self.d = self.q = range(0, 5)
+        self.d = self.q = range(0, 3)
         # Generate all different combinations of p, q and q triplets
         self.pdq = list(itertools.product(self.p, self.d, self.q))
         self.best_param = None

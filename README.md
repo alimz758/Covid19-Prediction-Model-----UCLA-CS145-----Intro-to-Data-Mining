@@ -18,6 +18,20 @@ ARMA
 SARIMA
 ```
 
+## Run Best Performing Model for Round 1 and Round 2 seperately
+
+Go to the directory: Covid19-Prediction-Model-----UCLA-CS145-----Intro-to-Data-Mining
+then run the following commands for each round prediction
+> python3 run.py ARIMA 1
+
+This will run our ARIMA model for round 1. This will output a Team14.csv file with our predictions for round 1.
+This may take 30 minutes to finish.
+
+> python3 run.py ARIMA 2 
+
+This will run our ARIMA model for round 2. This will output a Team14.csv file with our predictions for round 2.
+This may take a few hours to finish. 
+
 ### ex)
 
 > py run.py NN

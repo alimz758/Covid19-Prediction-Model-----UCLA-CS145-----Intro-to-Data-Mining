@@ -49,7 +49,7 @@ def predict(model_type, whichRound):
 
     if whichRound == "2":
       trainRange = 224
-      predictionRange = 10 # normally is 21
+      predictionRange = 21 
     elif whichRound == "1":
       trainRange = 142
       predictionRange = 26
@@ -133,17 +133,17 @@ def write_file(prediction_values, whichRound):
               "," + str(row[2]) + "\n"
           file.write(line)
     elif whichRound == "2":
-      hackForecastID = 0
-      for row in prediction_values:
-          line = str(row[0]) + "," + str(row[1]) + \
-              "," + str(row[2]) + "\n"
-          file.write(line)
       # hackForecastID = 0
-      # for row in prediction_values[700:]:
-      #     line = str(hackForecastID) + "," + str(row[1]) + \
+      # for row in prediction_values:
+      #     line = str(row[0]) + "," + str(row[1]) + \
       #         "," + str(row[2]) + "\n"
-      #     hackForecastID += 1
       #     file.write(line)
+      hackForecastID = 0
+      for row in prediction_values[700:]:
+          line = str(hackForecastID) + "," + str(row[1]) + \
+              "," + str(row[2]) + "\n"
+          hackForecastID += 1
+          file.write(line)
 
 
 def main():
